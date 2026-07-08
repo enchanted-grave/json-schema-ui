@@ -5,64 +5,74 @@
  * It contains typing information for all components that exist in this project.
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
+import { JSONSchemaObject } from "@json-schema-tools/meta-schema";
+export { JSONSchemaObject } from "@json-schema-tools/meta-schema";
 export namespace Components {
-    interface MyComponent {
-        /**
-          * The first name
-         */
-        "first": string;
-        /**
-          * The last name
-         */
-        "last": string;
-        /**
-          * The middle name
-         */
-        "middle": string;
+    interface JsonWizard {
+        "schema": string;
+    }
+    interface JsonWizardArray {
+        "name": string;
+        "schema": JSONSchemaObject;
     }
 }
 declare global {
-    interface HTMLMyComponentElement extends Components.MyComponent, HTMLStencilElement {
+    interface HTMLJsonWizardElement extends Components.JsonWizard, HTMLStencilElement {
     }
-    var HTMLMyComponentElement: {
-        prototype: HTMLMyComponentElement;
-        new (): HTMLMyComponentElement;
+    var HTMLJsonWizardElement: {
+        prototype: HTMLJsonWizardElement;
+        new (): HTMLJsonWizardElement;
+    };
+    interface HTMLJsonWizardArrayElement extends Components.JsonWizardArray, HTMLStencilElement {
+    }
+    var HTMLJsonWizardArrayElement: {
+        prototype: HTMLJsonWizardArrayElement;
+        new (): HTMLJsonWizardArrayElement;
     };
     interface HTMLElementTagNameMap {
-        "my-component": HTMLMyComponentElement;
+        "json-wizard": HTMLJsonWizardElement;
+        "json-wizard-array": HTMLJsonWizardArrayElement;
     }
 }
 declare namespace LocalJSX {
-    interface MyComponent {
+    interface JsonWizard {
         /**
-          * The first name
+          * If `true`, the user cannot interact with the element.
          */
-        "first"?: string;
+        "disabled"?: boolean;
         /**
-          * The last name
+          * The `id` of a `<form>` element to associate this element with.
          */
-        "last"?: string;
+        "form"?: string;
         /**
-          * The middle name
+          * The name of the element, used when submitting an HTML form.
          */
-        "middle"?: string;
+        "name"?: string;
+        "schema"?: string;
+    }
+    interface JsonWizardArray {
+        "name"?: string;
+        "schema"?: JSONSchemaObject;
     }
 
-    interface MyComponentAttributes {
-        "first": string;
-        "middle": string;
-        "last": string;
+    interface JsonWizardAttributes {
+        "schema": string;
+    }
+    interface JsonWizardArrayAttributes {
+        "name": string;
     }
 
     interface IntrinsicElements {
-        "my-component": Omit<MyComponent, keyof MyComponentAttributes> & { [K in keyof MyComponent & keyof MyComponentAttributes]?: MyComponent[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `attr:${K}`]?: MyComponentAttributes[K] } & { [K in keyof MyComponent & keyof MyComponentAttributes as `prop:${K}`]?: MyComponent[K] };
+        "json-wizard": Omit<JsonWizard, keyof JsonWizardAttributes> & { [K in keyof JsonWizard & keyof JsonWizardAttributes]?: JsonWizard[K] } & { [K in keyof JsonWizard & keyof JsonWizardAttributes as `attr:${K}`]?: JsonWizardAttributes[K] } & { [K in keyof JsonWizard & keyof JsonWizardAttributes as `prop:${K}`]?: JsonWizard[K] };
+        "json-wizard-array": Omit<JsonWizardArray, keyof JsonWizardArrayAttributes> & { [K in keyof JsonWizardArray & keyof JsonWizardArrayAttributes]?: JsonWizardArray[K] } & { [K in keyof JsonWizardArray & keyof JsonWizardArrayAttributes as `attr:${K}`]?: JsonWizardArrayAttributes[K] } & { [K in keyof JsonWizardArray & keyof JsonWizardArrayAttributes as `prop:${K}`]?: JsonWizardArray[K] };
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "my-component": LocalJSX.IntrinsicElements["my-component"] & JSXBase.HTMLAttributes<HTMLMyComponentElement>;
+            "json-wizard": LocalJSX.IntrinsicElements["json-wizard"] & JSXBase.HTMLAttributes<HTMLJsonWizardElement>;
+            "json-wizard-array": LocalJSX.IntrinsicElements["json-wizard-array"] & JSXBase.HTMLAttributes<HTMLJsonWizardArrayElement>;
         }
     }
 }

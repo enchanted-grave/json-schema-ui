@@ -39,12 +39,18 @@
     "generate": "stencil generate"
   },
   "devDependencies": {
-    "@stencil/core": "^4.27.1 || ^5.0.0-0",
-    "@stencil/vitest": "^1.8.3",
-    "@types/node": "^22.13.5",
-    "@vitest/browser-playwright": "^4.0.0",
-    "playwright": "^1.52.0",
-    "vitest": "^4.0.0"
+    "@stencil/core": "^4.43.5",
+    "@stencil/vitest": "^1.13.3",
+    "@types/jest": "^30.0.0",
+    "@types/node": "^22.20.0",
+    "@vitest/browser-playwright": "^4.1.9",
+    "playwright": "^1.61.1",
+    "vitest": "^4.1.9"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "@json-schema-tools/dereferencer": "^1.6.3",
+    "@json-schema-tools/meta-schema": "^1.8.0",
+    "@json-schema-tools/traverse": "^1.11.0"
+  }
 }
