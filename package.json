@@ -28,7 +28,7 @@
   "homepage": "https://github.com/enchanted-grave/json-schema-ui",
   "repository": {
     "type": "git",
-    "url": "https://github.com/enchanted-grave/json-schema-ui"
+    "url": "git+https://github.com/enchanted-grave/json-schema-ui.git"
   },
   "bugs": {
     "url": "https://github.com/enchanted-grave/json-schema-ui/issues"
