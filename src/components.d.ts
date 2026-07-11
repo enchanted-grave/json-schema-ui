@@ -8,35 +8,35 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 import { JSONSchemaObject } from "@json-schema-tools/meta-schema";
 export { JSONSchemaObject } from "@json-schema-tools/meta-schema";
 export namespace Components {
-    interface JsonWizard {
+    interface JsonSchemaUi {
         "path"?: string;
         "schema": string;
     }
-    interface JsonWizardArray {
-        "name": string;
+    interface JsonSchemaUiArray {
+        "keyName": string;
         "schema": JSONSchemaObject;
     }
 }
 declare global {
-    interface HTMLJsonWizardElement extends Components.JsonWizard, HTMLStencilElement {
+    interface HTMLJsonSchemaUiElement extends Components.JsonSchemaUi, HTMLStencilElement {
     }
-    var HTMLJsonWizardElement: {
-        prototype: HTMLJsonWizardElement;
-        new (): HTMLJsonWizardElement;
+    var HTMLJsonSchemaUiElement: {
+        prototype: HTMLJsonSchemaUiElement;
+        new (): HTMLJsonSchemaUiElement;
     };
-    interface HTMLJsonWizardArrayElement extends Components.JsonWizardArray, HTMLStencilElement {
+    interface HTMLJsonSchemaUiArrayElement extends Components.JsonSchemaUiArray, HTMLStencilElement {
     }
-    var HTMLJsonWizardArrayElement: {
-        prototype: HTMLJsonWizardArrayElement;
-        new (): HTMLJsonWizardArrayElement;
+    var HTMLJsonSchemaUiArrayElement: {
+        prototype: HTMLJsonSchemaUiArrayElement;
+        new (): HTMLJsonSchemaUiArrayElement;
     };
     interface HTMLElementTagNameMap {
-        "json-wizard": HTMLJsonWizardElement;
-        "json-wizard-array": HTMLJsonWizardArrayElement;
+        "json-schema-ui": HTMLJsonSchemaUiElement;
+        "json-schema-ui-array": HTMLJsonSchemaUiArrayElement;
     }
 }
 declare namespace LocalJSX {
-    interface JsonWizard {
+    interface JsonSchemaUi {
         /**
           * If `true`, the user cannot interact with the element.
          */
@@ -52,30 +52,30 @@ declare namespace LocalJSX {
         "path"?: string;
         "schema"?: string;
     }
-    interface JsonWizardArray {
-        "name"?: string;
+    interface JsonSchemaUiArray {
+        "keyName"?: string;
         "schema"?: JSONSchemaObject;
     }
 
-    interface JsonWizardAttributes {
+    interface JsonSchemaUiAttributes {
         "schema": string;
         "path": string;
     }
-    interface JsonWizardArrayAttributes {
-        "name": string;
+    interface JsonSchemaUiArrayAttributes {
+        "keyName": string;
     }
 
     interface IntrinsicElements {
-        "json-wizard": Omit<JsonWizard, keyof JsonWizardAttributes> & { [K in keyof JsonWizard & keyof JsonWizardAttributes]?: JsonWizard[K] } & { [K in keyof JsonWizard & keyof JsonWizardAttributes as `attr:${K}`]?: JsonWizardAttributes[K] } & { [K in keyof JsonWizard & keyof JsonWizardAttributes as `prop:${K}`]?: JsonWizard[K] };
-        "json-wizard-array": Omit<JsonWizardArray, keyof JsonWizardArrayAttributes> & { [K in keyof JsonWizardArray & keyof JsonWizardArrayAttributes]?: JsonWizardArray[K] } & { [K in keyof JsonWizardArray & keyof JsonWizardArrayAttributes as `attr:${K}`]?: JsonWizardArrayAttributes[K] } & { [K in keyof JsonWizardArray & keyof JsonWizardArrayAttributes as `prop:${K}`]?: JsonWizardArray[K] };
+        "json-schema-ui": Omit<JsonSchemaUi, keyof JsonSchemaUiAttributes> & { [K in keyof JsonSchemaUi & keyof JsonSchemaUiAttributes]?: JsonSchemaUi[K] } & { [K in keyof JsonSchemaUi & keyof JsonSchemaUiAttributes as `attr:${K}`]?: JsonSchemaUiAttributes[K] } & { [K in keyof JsonSchemaUi & keyof JsonSchemaUiAttributes as `prop:${K}`]?: JsonSchemaUi[K] };
+        "json-schema-ui-array": Omit<JsonSchemaUiArray, keyof JsonSchemaUiArrayAttributes> & { [K in keyof JsonSchemaUiArray & keyof JsonSchemaUiArrayAttributes]?: JsonSchemaUiArray[K] } & { [K in keyof JsonSchemaUiArray & keyof JsonSchemaUiArrayAttributes as `attr:${K}`]?: JsonSchemaUiArrayAttributes[K] } & { [K in keyof JsonSchemaUiArray & keyof JsonSchemaUiArrayAttributes as `prop:${K}`]?: JsonSchemaUiArray[K] };
     }
 }
 export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
-            "json-wizard": LocalJSX.IntrinsicElements["json-wizard"] & JSXBase.HTMLAttributes<HTMLJsonWizardElement>;
-            "json-wizard-array": LocalJSX.IntrinsicElements["json-wizard-array"] & JSXBase.HTMLAttributes<HTMLJsonWizardArrayElement>;
+            "json-schema-ui": LocalJSX.IntrinsicElements["json-schema-ui"] & JSXBase.HTMLAttributes<HTMLJsonSchemaUiElement>;
+            "json-schema-ui-array": LocalJSX.IntrinsicElements["json-schema-ui-array"] & JSXBase.HTMLAttributes<HTMLJsonSchemaUiArrayElement>;
         }
     }
 }

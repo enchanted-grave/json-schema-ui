@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JsonWizardArray } from '../json-wizard-array';
+import { JsonSchemaUIArray } from '../json-schema-ui-array';
 
-describe('json-wizard-array', () => {
+describe('json-schema-ui-array', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [JsonWizardArray],
-      html: `<json-wizard-array></json-wizard-array>`,
+      components: [JsonSchemaUIArray],
+      html: `<json-schema-ui-array></json-schema-ui-array>`,
     });
     expect(page.root).toEqualHtml(`
-      <json-wizard-array>
+      <json-schema-ui-array>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </json-wizard-array>
+      </json-schema-ui-array>
     `);
   });
 });

@@ -1,7 +1,7 @@
 import { Config } from '@stencil/core';
 
 export const config: Config = {
-  namespace: 'json-wizard',
+  namespace: 'json-schema-ui',
   outputTargets: [
     {
       type: 'dist',

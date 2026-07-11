@@ -1,18 +1,18 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { JsonWizard } from '../json-wizard';
+import { JsonSchemaUI } from '../json-schema-ui';
 
-describe('json-wizard', () => {
+describe('json-schema-ui', () => {
   it('renders', async () => {
     const page = await newSpecPage({
-      components: [JsonWizard],
-      html: `<json-wizard></json-wizard>`,
+      components: [JsonSchemaUI],
+      html: `<json-schema-ui></json-schema-ui>`,
     });
     expect(page.root).toEqualHtml(`
-      <json-wizard>
+      <json-schema-ui>
         <mock:shadow-root>
           <slot></slot>
         </mock:shadow-root>
-      </json-wizard>
+      </json-schema-ui>
     `);
   });
 });

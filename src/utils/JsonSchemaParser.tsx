@@ -2,11 +2,44 @@ import type { ArrayOfSimpleTypes, JSONSchema, JSONSchemaObject } from '@json-sch
 import { h } from '@stencil/core';
 import { UUID } from 'crypto';
 
+function invalid(schema: JSONSchema, name:string) {
+  console.warn(`Cannot display schema at ${name}:`, schema)
+  return <div>Cannot load schema.</div>
+}
+
+function unhandled(schema: JSONSchema, name: string, info: string = '') {
+  info += ' '
+  console.warn(`Cannot handle schema ${info}at ${name}:`, schema)
+  return <div>Cannot handle schema.</div>
+}
+
+/**
+ * Basic parsing utilities for JSON Schema.
+ */
 export abstract class JsonSchemaParser {
-  protected parseObject(schema: JSONSchemaObject, name: string) {
+
+  protected parseValue(schema: JSONSchema, key: string, jsx) {
+    if (!schema || typeof schema === 'boolean') {
+      return invalid(schema, key)
+    }
     return (
       <div>
-        <div>{schema.title ?? name}</div>
+        <span>
+          <b>{schema.title ?? key}</b>:{' '}
+        </span>
+        {jsx}
+        <span>
+          {' '}
+          <i>{schema.description}</i>
+        </span>
+      </div>
+    );
+  }
+
+  protected parseObject(schema: JSONSchemaObject, key: string) {
+    return (
+      <div>
+        <div>{schema.title ?? key}</div>
         <div>
           <i>{schema.description}</i>
         </div>
@@ -19,45 +52,27 @@ export abstract class JsonSchemaParser {
     );
   }
 
-  protected parseValue(schema: JSONSchema, name: string, jsx) {
-    if (!schema || typeof schema === 'boolean') {
-      return <div>Cannot load schema.</div>;
-    }
-    return (
-      <div>
-        <span>
-          <b>{schema.title ?? name}</b>:{' '}
-        </span>
-        {jsx}
-        <span>
-          {' '}
-          <i>{schema.description}</i>
-        </span>
-      </div>
-    );
-  }
-
-  protected parseString(schema: JSONSchemaObject, name: string) {
+  protected parseString(schema: JSONSchemaObject, key: string) {
     const placeholder = schema.examples ? 'e.g. ' + schema.examples.join(', ') : undefined;
     const jsx = (
       <input type="text" required minlength={schema.minLength} maxlength={schema.maxLength} pattern={schema.pattern} placeholder={placeholder ?? ''} size={placeholder?.length} />
     );
-    return this.parseValue(schema, name, jsx);
+    return this.parseValue(schema, key, jsx);
   }
 
-  protected parseNumber(schema: JSONSchemaObject, name: string) {
+  protected parseNumber(schema: JSONSchemaObject, key: string) {
     const jsx = <input type="number" id="" name="" min={schema.minimum ?? schema.exclusiveMinimum + 1} max={schema.maximum ?? schema.exclusiveMaximum} />;
-    return this.parseValue(schema, name, jsx);
+    return this.parseValue(schema, key, jsx);
   }
 
-  protected parseBoolean(schema: JSONSchemaObject, name: string) {
+  protected parseBoolean(schema: JSONSchemaObject, key: string) {
     const jsx = <input type="checkbox" id="" name="" />;
-    return this.parseValue(schema, name, jsx);
+    return this.parseValue(schema, key, jsx);
   }
 
-  protected parseArray(schema: JSONSchemaObject, name: string) {
-    const container = this.parseValue(schema, name, <></>);
-    const items = this.parse(schema.items, name);
+  protected parseArray(schema: JSONSchemaObject, key: string) {
+    const container = this.parseValue(schema, key, <></>);
+    const items = this.parse(schema.items, key);
     return (
       <div>
         <div>
@@ -68,7 +83,7 @@ export abstract class JsonSchemaParser {
     );
   }
 
-  protected parseEnum(schema: JSONSchemaObject, name: string) {
+  protected parseEnum(schema: JSONSchemaObject, key: string) {
     const jsx = (
       <select>
         {schema.enum.map(v => (
@@ -78,10 +93,10 @@ export abstract class JsonSchemaParser {
         ))}
       </select>
     );
-    return this.parseValue(schema, name, jsx);
+    return this.parseValue(schema, key, jsx);
   }
 
-  protected parseAnyOf(schema: JSONSchemaObject, name: string) {
+  protected parseAnyOf(schema: JSONSchemaObject, key: string) {
     const unique: UUID = crypto.randomUUID();
     const jsx = (
       <div>
@@ -96,52 +111,50 @@ export abstract class JsonSchemaParser {
         </fieldset>
       </div>
     );
-    return this.parseValue(schema, name, jsx);
+    return this.parseValue(schema, key, jsx);
   }
 
-  protected parse(schema?: JSONSchema, name: string = 'root') {
+  protected parse(schema?: JSONSchema, key: string = 'root') {
     /* Special cases. */
-    if (!schema) {
-      return <div>Cannot load schema.</div>;
-    } else if (typeof schema === 'boolean') {
-      return <div>Cannot load schema.</div>;
+    if (!schema || (typeof schema === 'boolean')) {
+      return invalid(schema, key);
     } else if (Array.isArray(schema)) {
       return schema.map(sch => this.parse(sch, 'type'));
-    } else {
-      /* Build html. */
-      switch (schema.type) {
-        case undefined:
-          if (schema.anyOf) {
-            return this.parseAnyOf(schema, name);
-          } else if (schema.const) {
-            return schema.const;
-          } else if (schema.enum) {
-            return this.parseEnum(schema, name);
-          } else if (schema.properties) {
-            return this.parseObject(schema, name);
-          } else {
-            console.log('Unhandled schema:', schema);
-            return <div>Unhandled schema.</div>;
-          }
-        case 'object':
-          return this.parseObject(schema, name);
-        case 'string':
-          return this.parseString(schema, name);
-        case 'number':
-        case 'integer':
-          return this.parseNumber(schema, name);
-        case 'boolean':
-          return this.parseBoolean(schema, name);
-        case 'array':
-          return this.parseArray(schema, name);
-        case 'null':
-          return <div>'null ???'</div>;
-        default:
-          /* We have handled ArrayOfSimpleTypes by handling array already above. */
-          schema.type satisfies never | ArrayOfSimpleTypes;
+    }
+    /* Default types. */
+    if (!schema.type) {
+      if (schema.anyOf) {
+        return this.parseAnyOf(schema, key);
+      } else if (schema.const) {
+        return schema.const;
+      } else if (schema.enum) {
+        return this.parseEnum(schema, key);
+      } else if (schema.properties) {
+        return this.parseObject(schema, key);
+      } else {
+        return unhandled(schema, key, 'without type')
       }
     }
-    console.log('Unknown schema:', schema);
+    /* Specified types. */
+    switch (schema.type) {
+      case 'object':
+        return this.parseObject(schema, key);
+      case 'string':
+        return this.parseString(schema, key);
+      case 'number':
+      case 'integer':
+        return this.parseNumber(schema, key);
+      case 'boolean':
+        return this.parseBoolean(schema, key);
+      case 'array':
+        return this.parseArray(schema, key);
+      case 'null':
+        return <div>'null ???'</div>;
+      default:
+        /* We have handled ArrayOfSimpleTypes by handling array already above. */
+        schema.type satisfies never | ArrayOfSimpleTypes;
+    }
+    return unhandled(schema, key, ' without a clear type')
   }
 
   componentDidLoad() {}

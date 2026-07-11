@@ -5,21 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=5.0" />
     <title>Stencil Component Starter</title>
 
-    <script type="module" src="/build/json-wizard.esm.js"></script>
-    <script nomodule src="/build/json-wizard.js"></script>
+    <script type="module" src="/build/json-schema-ui.esm.js"></script>
+    <script nomodule src="/build/json-schema-ui.js"></script>
   </head>
   <body>
     <h1>Document Record.</h1>
-    <json-wizard
+    <!--<json-schema-ui schema="./falsobordone-project/schemas/falsobordone.schema.json" path="#/definitions/Document"></json-schema-ui>-->
+    <json-schema-ui
       schema="https://raw.githubusercontent.com/Early-Music-Typesetting/falsobordone-project/refs/heads/main/schemas/falsobordone.schema.json"
       path="#/definitions/Document"
-    ></json-wizard>
+    ></json-schema-ui>
     <h1>Tonus Record.</h1>
-    <json-wizard
+    <json-schema-ui
       schema="https://raw.githubusercontent.com/Early-Music-Typesetting/falsobordone-project/refs/heads/main/schemas/falsobordone.schema.json"
       path="#/definitions/Tonus"
-    ></json-wizard>
-    <h2>Falsobordone Record.</h2>
-    <json-wizard schema="https://raw.githubusercontent.com/Early-Music-Typesetting/falsobordone-project/refs/heads/main/schemas/falsobordone.schema.json"></json-wizard>
+    ></json-schema-ui>
+    <h1>Falsobordone Record.</h1>
+    <json-schema-ui schema="https://raw.githubusercontent.com/Early-Music-Typesetting/falsobordone-project/refs/heads/main/schemas/falsobordone.schema.json"></json-schema-ui>
   </body>
 </html>

@@ -4,15 +4,15 @@ import { JsonSchemaParser } from '../../utils/JsonSchemaParser';
 import { UUID } from 'crypto';
 
 @Component({
-  tag: 'json-wizard-array',
-  styleUrl: 'json-wizard-array.css',
+  tag: 'json-schema-ui-array',
+  styleUrl: 'json-schema-ui-array.css',
   shadow: true,
 })
-export class JsonWizardArray extends JsonSchemaParser {
+export class JsonSchemaUIArray extends JsonSchemaParser {
   $container: HTMLDivElement;
 
   @Prop() schema: JSONSchemaObject;
-  @Prop() name: string;
+  @Prop() keyName: string;
   @State() items: UUID[] = [];
 
   removeItem(e: Event) {
@@ -29,7 +29,7 @@ export class JsonWizardArray extends JsonSchemaParser {
   parseItem(itemID: UUID) {
     return (
       <fieldset data-id={itemID}>
-        {this.parse(this.schema.items, this.name)}
+        {this.parse(this.schema.items, this.keyName)}
         <button onClick={e => this.removeItem(e)}>Delete</button>
       </fieldset>
     );
