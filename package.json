@@ -1,5 +1,6 @@
 {
   "name": "json-schema-ui",
+  "author": "Artur J. Dobija (Engraving Chant)",
   "version": "0.0.1",
   "description": "Stencil Component Starter",
   "main": "dist/index.cjs.js",
@@ -8,6 +9,7 @@
   "collection": "dist/collection/collection-manifest.json",
   "collection:main": "dist/collection/index.js",
   "unpkg": "dist/json-schema-ui/json-schema-ui.esm.js",
+  "keywords": [],
   "exports": {
     ".": {
       "import": "./dist/json-schema-ui/json-schema-ui.esm.js",
@@ -23,6 +25,10 @@
       "types": "./loader/index.d.ts"
     }
   },
+  "bugs": {
+    "url": "https://github.com/Koninklijk-Conservatorium/json-schema-ui/issues"
+  },
+  "homepage": "https://github.com/Koninklijk-Conservatorium/json-schema-ui",
   "repository": {
     "type": "git",
     "url": "https://github.com/Koninklijk-Conservatorium/json-schema-ui"
